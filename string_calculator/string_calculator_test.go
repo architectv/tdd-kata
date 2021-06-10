@@ -23,6 +23,10 @@ func TestAdd(t *testing.T) {
 			input: "2,3",
 			want:  5,
 		},
+		"some numbers": {
+			input: "1,2,3,4,5",
+			want:  15,
+		},
 	}
 
 	for name, tc := range tests {
