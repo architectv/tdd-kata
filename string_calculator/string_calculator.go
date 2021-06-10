@@ -5,9 +5,19 @@ import (
 	"strings"
 )
 
+const defaultDelimiter = ','
+
 func Add(input string) (int, error) {
+	delimiter := defaultDelimiter
+	runes := []rune(input)
+	// Change delimiter: `//[delimiter]\n[numbers...]`
+	if strings.HasPrefix(input, "//") && runes[3] == '\n' && len(runes) > 3 {
+		delimiter = runes[2]
+		input = string(runes[4:])
+	}
+
 	numbers := strings.FieldsFunc(input, func(c rune) bool {
-		return c == ',' || c == '\n'
+		return c == delimiter || c == '\n'
 	})
 
 	sum := 0

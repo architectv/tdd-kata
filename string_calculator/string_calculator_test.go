@@ -37,7 +37,7 @@ func TestAdd(t *testing.T) {
 			want:  1,
 		},
 		"change delimiter": {
-			input: "//;\\n1;2",
+			input: "//;\n1;2",
 			want:  3,
 		},
 	}
