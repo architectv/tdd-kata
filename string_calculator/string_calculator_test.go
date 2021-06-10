@@ -60,6 +60,10 @@ func TestAdd(t *testing.T) {
 			input: "1,2,3,1001,4,5",
 			want:  15,
 		},
+		"some symbols in delimiter": {
+			input: "//[***]\n1***2***3",
+			want:  6,
+		},
 	}
 
 	for name, tc := range tests {
