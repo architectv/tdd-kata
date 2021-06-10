@@ -5,7 +5,7 @@ import (
 	"strings"
 )
 
-func Add(input string) int {
+func Add(input string) (int, error) {
 	numbers := strings.Split(input, ",")
 
 	sum := 0
@@ -16,5 +16,5 @@ func Add(input string) int {
 		}
 	}
 
-	return sum
+	return sum, nil
 }

@@ -8,8 +8,9 @@ import (
 
 func TestAdd(t *testing.T) {
 	tests := map[string]struct {
-		input string
-		want  int
+		input   string
+		want    int
+		wantErr bool
 	}{
 		"empty input": {
 			input: "",
@@ -27,11 +28,25 @@ func TestAdd(t *testing.T) {
 			input: "1,2,3,4,5",
 			want:  15,
 		},
+		"(ok) new lines between numbers": {
+			input: "1\n2,3",
+			want:  6,
+		},
+		"(wrong) new lines between numbers": {
+			input:   "1,\n",
+			want:    0,
+			wantErr: true,
+		},
 	}
 
 	for name, tc := range tests {
 		t.Run(name, func(t *testing.T) {
-			got := string_calculator.Add(tc.input)
+			got, err := string_calculator.Add(tc.input)
+			if tc.wantErr {
+				assert.NotNil(t, err)
+			} else {
+				assert.Nil(t, err)
+			}
 			assert.Equal(t, tc.want, got)
 		})
 	}
