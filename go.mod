@@ -1,4 +1,4 @@
-module tdd-kata
+module github.com/architectv/tdd-kata
 
 go 1.16
 

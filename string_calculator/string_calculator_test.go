@@ -1,12 +1,13 @@
-package string_calculator
+package string_calculator_test
 
 import (
+	"github.com/architectv/tdd-kata/string_calculator"
 	"github.com/stretchr/testify/assert"
 	"testing"
 )
 
 func TestAdd(t *testing.T) {
-	tests := map[string]struct{
+	tests := map[string]struct {
 		input string
 		want  int
 	}{
@@ -26,7 +27,7 @@ func TestAdd(t *testing.T) {
 
 	for name, tc := range tests {
 		t.Run(name, func(t *testing.T) {
-			got := Add(tc.input)
+			got := string_calculator.Add(tc.input)
 			assert.Equal(t, tc.want, got)
 		})
 	}
