@@ -36,7 +36,7 @@ func Add(input string) (int, error) {
 			negativeFlag = true
 		}
 
-		if !negativeFlag {
+		if !negativeFlag && number <= 1000 {
 			sum += int(number)
 		}
 	}

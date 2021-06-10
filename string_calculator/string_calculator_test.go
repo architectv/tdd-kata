@@ -18,8 +18,8 @@ func TestAdd(t *testing.T) {
 			want:  0,
 		},
 		"one number": {
-			input: "2112",
-			want:  2112,
+			input: "21",
+			want:  21,
 		},
 		"two numbers": {
 			input: "2,3",
@@ -57,7 +57,7 @@ func TestAdd(t *testing.T) {
 			err:   fmt.Errorf("negatives not allowed: -1,-2,-3"),
 		},
 		"big numbers": {
-			input: "1,2,3,1000,4,5",
+			input: "1,2,3,1001,4,5",
 			want:  15,
 		},
 	}
