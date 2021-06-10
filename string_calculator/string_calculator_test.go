@@ -51,6 +51,15 @@ func TestAdd(t *testing.T) {
 			want:  0,
 			err:   fmt.Errorf("negatives not allowed: -1,-2,-3"),
 		},
+		"negative & positive numbers": {
+			input: "-1,1,2,3,-2,-3",
+			want:  0,
+			err:   fmt.Errorf("negatives not allowed: -1,-2,-3"),
+		},
+		"big numbers": {
+			input: "1,2,3,1000,4,5",
+			want:  15,
+		},
 	}
 
 	for name, tc := range tests {
