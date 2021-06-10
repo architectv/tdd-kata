@@ -33,9 +33,8 @@ func TestAdd(t *testing.T) {
 			want:  6,
 		},
 		"(wrong) new lines between numbers": {
-			input:   "1,\n",
-			want:    0,
-			wantErr: true,
+			input: "1,\n",
+			want:  1,
 		},
 	}
 
