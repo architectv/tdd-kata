@@ -1,6 +1,7 @@
 package string_calculator_test
 
 import (
+	"fmt"
 	"github.com/architectv/tdd-kata/string_calculator"
 	"github.com/stretchr/testify/assert"
 	"testing"
@@ -8,9 +9,9 @@ import (
 
 func TestAdd(t *testing.T) {
 	tests := map[string]struct {
-		input   string
-		want    int
-		wantErr bool
+		input string
+		want  int
+		err   error
 	}{
 		"empty input": {
 			input: "",
@@ -40,16 +41,22 @@ func TestAdd(t *testing.T) {
 			input: "//;\n1;2",
 			want:  3,
 		},
+		"negative number": {
+			input: "-1",
+			want:  0,
+			err:   fmt.Errorf("negatives not allowed: -1"),
+		},
+		"negative numbers": {
+			input: "-1,-2,-3",
+			want:  0,
+			err:   fmt.Errorf("negatives not allowed: -1,-2,-3"),
+		},
 	}
 
 	for name, tc := range tests {
 		t.Run(name, func(t *testing.T) {
 			got, err := string_calculator.Add(tc.input)
-			if tc.wantErr {
-				assert.NotNil(t, err)
-			} else {
-				assert.Nil(t, err)
-			}
+			assert.Equal(t, tc.err, err)
 			assert.Equal(t, tc.want, got)
 		})
 	}
