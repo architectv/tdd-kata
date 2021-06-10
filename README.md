@@ -51,3 +51,7 @@ if there are multiple negatives, show all of them in the exception message.
 STOP HERE if you are a beginner. Continue if you can finish the steps so far in less than 30 minutes.
 
 ————————————————————————————————
+
+6. Numbers bigger than 1000 should be ignored, so adding 2 + 1001 = 2
+
+————————————————————————————————
