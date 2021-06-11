@@ -29,13 +29,14 @@ func TestAdd(t *testing.T) {
 			input: "1,2,3,4,5",
 			want:  15,
 		},
-		"new lines between numbers [1]": {
+		"(ok) new lines between numbers": {
 			input: "1\n2,3",
 			want:  6,
 		},
-		"new lines between numbers [2]": {
+		"(wrong) new lines between numbers": {
 			input: "1,\n",
-			want:  1,
+			want:  0,
+			err:   fmt.Errorf("wrong number"),
 		},
 		"change delimiter": {
 			input: "//;\n1;2",

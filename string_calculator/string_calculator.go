@@ -2,24 +2,71 @@ package string_calculator
 
 import (
 	"fmt"
+	"regexp"
 	"strconv"
 	"strings"
+	"unicode/utf8"
 )
 
-const defaultDelimiter = ','
+func NewDelimiters(line string) ([]string, error) {
+	var delimiters []string
 
-func Add(input string) (int, error) {
-	delimiter := defaultDelimiter
-	runes := []rune(input)
-	// Change delimiter: `//[delimiter]\n[numbers...]`
-	if strings.HasPrefix(input, "//") && runes[3] == '\n' && len(runes) > 3 {
-		delimiter = runes[2]
-		input = string(runes[4:])
+	line = strings.TrimPrefix(line, "//")
+	if strings.HasPrefix(line, "[") && strings.HasSuffix(line, "]") {
+		line = strings.TrimPrefix(line, "[")
+		line = strings.TrimSuffix(line, "]")
+		delimiters = append(delimiters, line)
+	} else if utf8.RuneCountInString(line) == 1 {
+		delimiters = append(delimiters, line)
+	} else {
+		return nil, fmt.Errorf("wrong delimiter")
 	}
 
-	numbers := strings.FieldsFunc(input, func(c rune) bool {
-		return c == delimiter || c == '\n'
-	})
+	return delimiters, nil
+}
+
+func GetDelimiters(input string) (string, []string, error) {
+	var delimiters []string
+
+	// Change delimiter: `//[delimiter]\n[numbers...]`
+	if strings.HasPrefix(input, "//") {
+		lines := strings.SplitN(input, "\n", 2)
+		if len(lines) != 2 {
+			return "", nil, fmt.Errorf("wrong delimiter")
+		}
+
+		var err error
+		delimiters, err = NewDelimiters(lines[0])
+		if err != nil {
+			return "", nil, err
+		}
+
+		input = lines[1]
+	} else {
+		delimiters = append(delimiters, ",")
+	}
+
+	delimiters = append(delimiters, "\n")
+
+	return input, delimiters, nil
+}
+
+func Add(input string) (int, error) {
+	if input == "" {
+		return 0, nil
+	}
+
+	numbersString, delimiters, err := GetDelimiters(input)
+	if err != nil {
+		return 0, err
+	}
+
+	for i := range delimiters {
+		delimiters[i] = regexp.QuoteMeta(delimiters[i])
+	}
+
+	re := regexp.MustCompile(strings.Join(delimiters, "|"))
+	numbers := re.Split(numbersString, -1)
 
 	sum := 0
 	var negatives []string
@@ -28,7 +75,7 @@ func Add(input string) (int, error) {
 	for _, value := range numbers {
 		number, err := strconv.ParseInt(value, 10, 64)
 		if err != nil {
-			return 0, err
+			return 0, fmt.Errorf("wrong number")
 		}
 
 		if number < 0 {
