@@ -1,5 +1,12 @@
 # TDD-kata
 
+[![test](https://github.com/architectv/tdd-kata/actions/workflows/test.yml/badge.svg)](https://github.com/architectv/tdd-kata/actions/workflows/test.yml)
+![GitHub go.mod Go version](https://img.shields.io/github/go-mod/go-version/architectv/tdd-kata)
+![Lines of code](https://img.shields.io/tokei/lines/github/architectv/tdd-kata)
+![Github Repository Size](https://img.shields.io/github/repo-size/architectv/tdd-kata)
+![License](https://img.shields.io/badge/license-MIT-green)
+![GitHub last commit](https://img.shields.io/github/last-commit/architectv/tdd-kata)
+
 Developed by Roy Osherove - https://osherove.com/tdd-kata-1
 
 ## String Calculator
