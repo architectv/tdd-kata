@@ -13,9 +13,12 @@ func NewDelimiters(line string) ([]string, error) {
 
 	line = strings.TrimPrefix(line, "//")
 	if strings.HasPrefix(line, "[") && strings.HasSuffix(line, "]") {
-		line = strings.TrimPrefix(line, "[")
-		line = strings.TrimSuffix(line, "]")
-		delimiters = append(delimiters, line)
+		re := regexp.MustCompile(`\[(.*?)\]`)
+		delimiters = re.FindAllString(line, -1)
+		for i := range delimiters {
+			delimiters[i] = strings.TrimPrefix(delimiters[i], "[")
+			delimiters[i] = strings.TrimSuffix(delimiters[i], "]")
+		}
 	} else if utf8.RuneCountInString(line) == 1 {
 		delimiters = append(delimiters, line)
 	} else {
