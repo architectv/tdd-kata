@@ -8,6 +8,7 @@ import (
 )
 
 func TestAdd(t *testing.T) {
+	t.Parallel()
 	tests := map[string]struct {
 		input string
 		want  int
@@ -65,14 +66,22 @@ func TestAdd(t *testing.T) {
 			input: "//[***]\n1***2***3",
 			want:  6,
 		},
-		"multiple delimiters": {
+		"multiple delimiters with one char": {
 			input: "//[*][%]\n1*2%3",
 			want:  6,
+		},
+		"multiple delimiters with some chars": {
+			input: "//[***][%][;;]\n1***2%3;;4***5",
+			want:  15,
 		},
 	}
 
 	for name, tc := range tests {
+		// Note: https://github.com/golang/go/wiki/CommonMistakes#using-goroutines-on-loop-iterator-variables
+		// Also: https://gist.github.com/posener/92a55c4cd441fc5e5e85f27bca008721
+		tc := tc
 		t.Run(name, func(t *testing.T) {
+			t.Parallel()
 			got, err := string_calculator.Add(tc.input)
 			assert.Equal(t, tc.err, err)
 			assert.Equal(t, tc.want, got)
