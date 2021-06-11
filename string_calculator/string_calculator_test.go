@@ -74,6 +74,11 @@ func TestAdd(t *testing.T) {
 			input: "//[***][%][;;]\n1***2%3;;4***5",
 			want:  15,
 		},
+		"wrong delimiters": {
+			input: "//***][%][;;]\n1***2%3;;4***5",
+			want:  0,
+			err:   fmt.Errorf("wrong delimiter"),
+		},
 	}
 
 	for name, tc := range tests {
